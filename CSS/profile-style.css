@@ -1,0 +1,906 @@
+/* ======================================= */
+/* 6. PROFILE PAGE STYLES (MODERN, CLEAN, SUBTLE) */
+/* ======================================= */
+
+/* --- CSS Variables for consistency --- */
+:root {
+  --primary-blue: #0d47a1; /* Darker blue, similar to Bootstrap primary */
+  --dark-blue: #002e70;
+  --text-dark: #333333; /* Slightly darker for better contrast */
+  --text-muted: #6a6a6a; /* Softer gray for secondary text */
+  --white: #ffffff;
+  --light-gray: #f8f8f8; /* Very light background for inputs */
+  --border-light: #e0e0e0; /* Light border color */
+  --error-red: #dc3545; /* Bootstrap danger red */
+  --success-green: #2ecc71; /* Green for save actions */
+}
+
+/* --- General Profile Page Layout --- */
+.page-content {
+  padding: 20px; /* Sesuaikan dengan padding page-content dashboard Anda */
+}
+
+.profile-content-section {
+  /* Pastikan section ini mengisi ruang yang tersedia */
+  width: 100%;
+  /* Atur min-height agar footer tidak melayang jika konten sedikit */
+  /* Variabel --navbar-height diasumsikan ada di CSS global Anda, jika tidak, ganti dengan nilai tetap */
+  min-height: calc(100vh - var(--navbar-height, 60px) - 40px - 40px);
+  /* 40px adalah total padding atas dan bawah dari .page-content (20px + 20px) */
+}
+
+.profile-container {
+  background: linear-gradient(
+    135deg,
+    var(--white),
+    #f0f2f5
+  ); /* Gradasi putih ke abu-abu muda */
+  color: var(--text-dark);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Shadow yang lebih halus dan luas */
+  max-width: 1200px; /* Cocokkan lebar konten dashboard */
+  margin: 0 auto; /* Pusatkan kontainer profil */
+  box-sizing: border-box;
+}
+
+/* Hapus efek background grid/partikel untuk profile-container jika ada */
+.profile-container::before {
+  display: none;
+}
+
+/* --- Profile Header Section --- */
+.profile-header-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+  background: var(--white); /* Putih solid untuk header */
+  border-radius: 15px;
+  padding: 30px 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06); /* Shadow halus */
+  border: 1px solid var(--border-light); /* Border terang */
+  position: relative;
+  overflow: hidden; /* Ini bisa dipertahankan jika Anda ingin header terpotong di sudut, atau hapus jika tidak */
+}
+
+/* Hapus overlay gradasi dari header jika ada */
+.profile-header-section::before {
+  display: none;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  /* PENTING: HAPUS overflow: hidden; dari sini */
+  /* overflow: hidden; */
+  border: 4px solid var(--primary-blue); /* Border tetap ada */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08); /* Shadow tetap ada */
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+.profile-avatar-wrapper:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+}
+
+/* PENTING: Tambahkan border-radius ke elemen gambar avatar itu sendiri */
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%; /* Ini akan membuat gambar avatar berbentuk lingkaran */
+}
+
+/* PERBAIKAN KRITIS: Posisi ikon edit avatar agar sepenuhnya di luar bingkai dan mudah diklik */
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0px; /* Posisikan di bagian paling bawah dari wrapper */
+  right: 0px; /* Posisikan di bagian paling kanan dari wrapper */
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1em;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 10; /* Pastikan ikon di atas avatar */
+  /* Gunakan transform untuk menggeser keluar dari batas lingkaran, tapi tetap terlihat */
+  /* Geser 50% dari lebar/tinggi sendiri ke luar dari sudut kanan bawah wrapper */
+  transform: translate(50%, 50%);
+}
+.edit-avatar-btn:hover {
+  background-color: var(--dark-blue);
+  transform: translate(50%, 50%) scale(1.05); /* Pertahankan posisi, sedikit lebih besar saat hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+.profile-info-main {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.profile-name {
+  font-size: 2.2em; /* Sedikit lebih kecil untuk tampilan lebih bersih */
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--text-dark);
+  text-shadow: none;
+  letter-spacing: 0;
+}
+
+.profile-title {
+  font-size: 1.1em; /* Sedikit lebih kecil */
+  color: var(--primary-blue);
+  margin-bottom: 12px; /* Jarak sedikit lebih kecil */
+  font-weight: 500;
+  text-shadow: none;
+}
+
+.profile-bio {
+  font-size: 0.95em; /* Sedikit lebih kecil */
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* --- Buttons --- */
+.btn-primary-glow,
+.btn-secondary-outline,
+.btn-save-inline,
+.btn-cancel-inline,
+.btn-delete-account,
+.btn-delete-confirm,
+.btn-cancel-modal,
+.btn-view-all-activity {
+  padding: 10px 20px;
+  border-radius: 8px; /* Sudut sedikit kurang membulat */
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary-glow {
+  background: linear-gradient(45deg, var(--primary-blue), var(--dark-blue));
+  color: var(--white);
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Shadow lebih lembut */
+}
+.btn-primary-glow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2); /* Efek kilau */
+  transform: skewX(-30deg);
+  transition: all 0.5s ease;
+}
+.btn-primary-glow:hover::before {
+  left: 100%;
+}
+.btn-primary-glow:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary-outline {
+  background: transparent;
+  color: var(--primary-blue);
+  border: 1px solid var(--primary-blue);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.03); /* Shadow sangat halus */
+}
+.btn-secondary-outline:hover {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-save-inline {
+  background: linear-gradient(45deg, var(--success-green), #27ae60);
+  color: var(--white);
+  border: none;
+  box-shadow: 0 3px 10px rgba(46, 204, 113, 0.15);
+}
+.btn-save-inline:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.25);
+}
+
+.btn-cancel-inline,
+.btn-cancel-modal {
+  background: #e0e0e0; /* Background abu-abu muda */
+  color: var(--text-dark);
+  border: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+.btn-cancel-inline:hover,
+.btn-cancel-modal:hover {
+  background: #d0d0d0; /* Abu-abu sedikit lebih gelap */
+  transform: translateY(-1px);
+  color: var(--text-dark);
+}
+
+.btn-view-all-activity {
+  background: transparent;
+  color: var(--primary-blue);
+  border: none;
+  text-decoration: underline;
+  font-weight: 500;
+  padding: 8px 15px;
+}
+.btn-view-all-activity:hover {
+  color: var(--dark-blue);
+  text-decoration: none;
+}
+
+/* --- Profile Grid & Cards --- */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.profile-card {
+  background: var(--white); /* Background putih solid */
+  border-radius: 15px;
+  padding: 25px;
+  border: 1px solid var(--border-light); /* Border terang */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Shadow halus */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Hapus efek glow/gradasi kartu jika ada */
+.profile-card::before {
+  display: none;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px; /* Tambah padding bawah untuk header */
+  border-bottom: 1px solid #f0f0f0; /* Garis pemisah */
+}
+
+.card-header h2 {
+  font-size: 1.3em; /* Sedikit lebih kecil */
+  font-weight: 600;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-shadow: none;
+  margin: 0; /* Pastikan tidak ada margin default */
+}
+
+.card-header h2 i {
+  color: var(--primary-blue);
+  font-size: 1.1em;
+}
+
+.edit-section-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1em;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  padding: 5px;
+}
+.edit-section-btn:hover {
+  color: var(--primary-blue);
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding-top: 10px; /* Padding atas untuk konten setelah garis pemisah */
+}
+
+/* --- Perbaikan Layout Text dalam Box (View Mode) --- */
+.card-content.view-mode p {
+  /* Targetkan hanya view-mode */
+  font-size: 0.95em;
+  margin-bottom: 10px; /* Jarak antar paragraf */
+  color: var(--text-muted);
+  display: flex; /* Gunakan flexbox untuk perataan label-value */
+  align-items: flex-start; /* Sejajarkan di bagian atas jika ada multi-baris */
+  gap: 10px; /* Jarak antara strong dan span */
+  line-height: 1.4; /* Meningkatkan keterbacaan */
+}
+.card-content.view-mode p:last-child {
+  margin-bottom: 0;
+}
+.card-content.view-mode p strong {
+  color: var(--text-dark);
+  font-weight: 500;
+  min-width: 120px; /* Beri lebar minimum untuk strong agar sejajar */
+  flex-shrink: 0; /* Jangan biarkan menyusut */
+  text-align: left; /* Pastikan label teks rata kiri */
+}
+.card-content.view-mode p span {
+  color: var(--text-dark);
+  flex-grow: 1; /* Biarkan span mengisi ruang yang tersisa */
+  word-break: break-word; /* Izinkan kata panjang untuk pecah baris */
+}
+
+/* --- Form Elements in Cards (Edit Mode) --- */
+.input-group {
+  margin-bottom: 18px; /* Jarak antar input group */
+  position: relative; /* Penting untuk positioning ikon */
+}
+.input-group label {
+  display: block;
+  margin-bottom: 6px; /* Jarak antara label dan input */
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 0.9em;
+}
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="date"],
+.input-group input[type="password"],
+.input-group select,
+.input-group textarea {
+  width: 100%;
+  padding: 12px 15px; /* Padding lebih besar */
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.95em;
+  color: var(--text-dark);
+  background-color: var(--light-gray); /* Background sangat terang */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: #999; /* Placeholder sedikit lebih gelap */
+}
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.15); /* Shadow biru lebih lembut */
+  background-color: var(--white);
+  outline: none;
+}
+.input-group textarea {
+  resize: vertical;
+  min-height: 90px; /* Tinggi minimum textarea */
+}
+
+.input-group select {
+  /* Custom arrow for select */
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236a6a6a'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Panah lebih gelap untuk background terang */
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  padding-right: 35px; /* Space for the custom arrow */
+}
+
+/* --- Password Input Container (untuk ikon mata) --- */
+.password-input-container,
+.date-input-container {
+  /* Tambahkan date-input-container di sini */
+  position: relative;
+  width: 100%;
+}
+
+.password-input-container input {
+  padding-right: 40px; /* Buat ruang untuk ikon mata */
+}
+
+.toggle-password,
+.input-icon {
+  /* Gabungkan styling ikon */
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+.toggle-password:hover,
+.input-icon:hover {
+  color: var(--primary-blue);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-blue);
+  cursor: pointer;
+}
+.checkbox-group label {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-size: 0.95em;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* --- Activity Log Card --- */
+.activity-log-card .card-content {
+  padding-top: 10px;
+}
+.activity-log-card .activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.activity-log-card .activity-list li {
+  padding: 12px 0; /* Padding lebih besar */
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9em;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.activity-log-card .activity-list li:last-child {
+  border-bottom: none;
+}
+.activity-log-card .activity-list .activity-time {
+  font-weight: 500;
+  color: var(--text-dark);
+  flex-shrink: 0;
+}
+.activity-log-card .activity-list li:not(:last-child) {
+  margin-bottom: 5px; /* Jarak antar item aktivitas */
+}
+
+/* --- Danger Zone --- */
+.profile-danger-zone {
+  background: #fff0f0; /* Background merah sangat muda */
+  border: 1px solid #ffcccc; /* Border merah muda */
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 30px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.05); /* Shadow merah sangat halus */
+}
+.profile-danger-zone h2 {
+  color: var(--error-red);
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-shadow: none;
+}
+.profile-danger-zone h2 i {
+  font-size: 1.2em;
+}
+.profile-danger-zone p {
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  font-size: 0.95em;
+}
+.btn-delete-account {
+  background: linear-gradient(45deg, var(--error-red), #c0392b);
+  color: var(--white);
+  border: none;
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.15);
+}
+.btn-delete-account:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.25);
+}
+
+/* --- Modal Overlays --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65); /* Overlay sedikit lebih gelap */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* PERBAIKAN: Modal agar bisa di-scroll dan tidak terpotong */
+.modal-content {
+  background: var(--white);
+  border-radius: 15px;
+  padding: 35px; /* Padding lebih besar */
+  max-width: 650px; /* Lebar maksimum sedikit lebih besar */
+  width: 90%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Shadow lebih lembut */
+  transform: translateY(-50px);
+  transition: transform 0.3s ease;
+  position: relative;
+  color: var(--text-dark);
+  max-height: 90vh; /* Tinggi maksimum modal, agar tidak melebihi viewport */
+  overflow-y: auto; /* Aktifkan scroll vertikal jika konten melebihi max-height */
+  box-sizing: border-box; /* Pastikan padding tidak menambah ukuran */
+}
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-title {
+  font-size: 2em; /* Ukuran judul lebih besar */
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 25px;
+  text-align: center;
+  text-shadow: none;
+}
+.modal-title i {
+  color: var(--primary-blue);
+  margin-right: 10px;
+}
+.modal-content.danger-modal .modal-title i {
+  color: var(--error-red);
+}
+
+.modal-separator {
+  border: 0;
+  height: 1px;
+  background-color: var(--border-light); /* Separator lebih terang */
+  margin: 25px 0;
+}
+
+.modal-message {
+  font-size: 1em;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Styling untuk pesan error/sukses di modal */
+.error-message,
+.success-message {
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  text-align: center;
+  line-height: 1.4;
+}
+.error-message {
+  background-color: #ffebeb; /* Light red background */
+  color: var(--error-red);
+  border: 1px solid var(--error-red);
+}
+.success-message {
+  background-color: #e6ffe6; /* Light green background */
+  color: var(--success-green);
+  border: 1px solid var(--success-green);
+}
+
+.modal-content.danger-modal {
+  background: #fff0f0;
+  border: 1px solid #ffcccc;
+  box-shadow: 0 15px 40px rgba(255, 0, 0, 0.15);
+}
+.modal-content.danger-modal .modal-title {
+  color: var(--error-red);
+  text-shadow: none;
+}
+
+.btn-delete-confirm {
+  background: var(--error-red);
+  color: var(--white);
+  border: none;
+}
+.btn-delete-confirm:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-delete-confirm:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+/* --- Utility Classes --- */
+.hidden {
+  display: none !important;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+  .profile-container {
+    padding: 25px;
+  }
+  .profile-header-section {
+    padding: 25px;
+    gap: 20px;
+  }
+  .profile-name {
+    font-size: 2em;
+  }
+  .profile-title {
+    font-size: 1.05em;
+  }
+  .profile-bio {
+    font-size: 0.9em;
+  }
+  .profile-actions {
+    justify-content: center;
+  }
+  .profile-grid {
+    gap: 20px;
+  }
+  .profile-card {
+    padding: 20px;
+  }
+  .card-header h2 {
+    font-size: 1.2em;
+  }
+  .card-content.view-mode p strong {
+    /* Targetkan hanya view-mode */
+    min-width: 100px; /* Sesuaikan lebar minimum untuk strong */
+  }
+  .profile-danger-zone {
+    padding: 25px;
+  }
+  .modal-content {
+    padding: 30px;
+    max-width: 550px;
+  }
+  .modal-title {
+    font-size: 1.8em;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px;
+  }
+  .profile-header-section {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+  }
+  .profile-info-main {
+    text-align: center;
+  }
+  .profile-avatar-wrapper {
+    width: 120px;
+    height: 120px;
+    border-width: 3px;
+  }
+  /* PERBAIKAN: Posisi ikon edit avatar di mobile */
+  .edit-avatar-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1em;
+    bottom: 0px;
+    right: 0px;
+    transform: translate(
+      40%,
+      40%
+    ); /* Sedikit lebih kecil geserannya di mobile */
+  }
+  .profile-name {
+    font-size: 1.8em;
+  }
+  .profile-title {
+    font-size: 1em;
+  }
+  .profile-bio {
+    font-size: 0.85em;
+  }
+  .profile-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-primary-glow,
+  .btn-secondary-outline {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .profile-card {
+    padding: 18px;
+  }
+  .card-header h2 {
+    font-size: 1.15em;
+  }
+  .card-content.view-mode p {
+    /* Targetkan hanya view-mode */
+    flex-direction: column; /* Stack label and value on small screens */
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .card-content.view-mode p strong {
+    /* Targetkan hanya view-mode */
+    min-width: unset; /* Hapus min-width */
+    width: 100%; /* Label mengambil lebar penuh */
+    margin-bottom: 2px;
+  }
+  .card-content.view-mode p span {
+    /* Targetkan hanya view-mode */
+    width: 100%; /* Value mengambil lebar penuh */
+  }
+  .input-group label {
+    font-size: 0.85em;
+  }
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    padding: 10px 12px;
+    font-size: 0.9em;
+  }
+  .activity-log-card .activity-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 0;
+  }
+  .activity-log-card .activity-list .activity-time {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .profile-danger-zone {
+    padding: 20px;
+  }
+  .modal-content {
+    padding: 25px;
+    max-width: 95%;
+  }
+  .modal-title {
+    font-size: 1.6em;
+  }
+  .modal-message {
+    font-size: 0.9em;
+  }
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .modal-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-content {
+    padding: 15px;
+  }
+  .profile-container {
+    padding: 15px;
+  }
+  .profile-header-section {
+    padding: 15px;
+  }
+  .profile-avatar-wrapper {
+    width: 100px;
+    height: 100px;
+    border-width: 3px;
+  }
+  .edit-avatar-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9em;
+  }
+  .profile-name {
+    font-size: 1.5em;
+  }
+  .profile-title {
+    font-size: 0.85em;
+  }
+  .profile-bio {
+    font-size: 0.8em;
+  }
+  .profile-card {
+    padding: 15px;
+  }
+  .card-header h2 {
+    font-size: 1em;
+  }
+  .edit-section-btn {
+    font-size: 0.9em;
+  }
+  .card-content.view-mode p strong, /* Targetkan hanya view-mode */
+    .card-content.view-mode p span {
+    /* Targetkan hanya view-mode */
+    font-size: 0.9em;
+  }
+  .input-group label {
+    font-size: 0.8em;
+  }
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    padding: 8px 10px;
+    font-size: 0.85em;
+  }
+  .checkbox-group label {
+    font-size: 0.85em;
+  }
+  .modal-content {
+    padding: 20px;
+  }
+  .modal-title {
+    font-size: 1.4em;
+  }
+  .modal-message {
+    font-size: 0.8em;
+  }
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .modal-actions button {
+    width: 100%;
+  }
+}
